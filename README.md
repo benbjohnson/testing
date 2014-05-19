@@ -6,21 +6,13 @@ Below is a small collection of testing functions for Go. You don't need to impor
 No, seriously. They're tiny functions. Just copy them.
 
 
-### Functions
-
-Assert that a condition is true.
-
 ```go
 func assert(tb testing.TB, condition bool, msg string, v ...interface{}) {
 	if !condition {
 		tb.Fatalf(msg, v...)
 	}
 }
-```
 
-Assert that two values are equal.
-
-```go
 func equals(tb testing.TB, exp, act interface{}) {
 	assert(tb, exp == act, "exp: %#v, got: %#v", exp, act)
 }
