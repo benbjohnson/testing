@@ -1,7 +1,10 @@
 /*
 
-You have to be kidding me. It's literally two functions. Why are you reading
-the documentation?
+You have to be kidding me.
+
+It's literally two functions.
+
+Why are you reading the documentation?
 
 	func assert(tb testing.TB, condition bool, msg string, v ...interface{}) {
 		if !condition {
