@@ -7,13 +7,27 @@ No, seriously. They're tiny functions. Just copy them.
 
 
 ```go
+import (
+	"fmt"
+	"path/filepath"
+	"runtime"
+	"testing"
+)
+
 func assert(tb testing.TB, condition bool, msg string, v ...interface{}) {
 	if !condition {
-		tb.Fatalf(msg, v...)
+		_, file, line, _ := runtime.Caller(1)
+		v = append([]interface{}{filepath.Base(file), line}, v...)
+		fmt.Printf("%s:%d: "+msg+"\n", v...)
+		tb.FailNow()
 	}
 }
 
 func equals(tb testing.TB, exp, act interface{}) {
-	assert(tb, exp == act, "exp: %#v, got: %#v", exp, act)
+	if exp != act {
+		_, file, line, _ := runtime.Caller(1)
+		fmt.Printf("%s:%d: exp: %#v, got: %#v\n", filepath.Base(file), line, exp, act)
+		tb.FailNow()
+	}
 }
 ```
