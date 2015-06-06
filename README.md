@@ -1,5 +1,6 @@
 Testing Functions for Go
 ========================
+testing pull request... for tutorial
 
 Below is a small collection of testing functions for Go. You don't need to import this as a dependency. Just copy these to your project as needed.
 
