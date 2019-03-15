@@ -8,37 +8,31 @@ No, seriously. They're tiny functions. Just copy them.
 
 ```go
 import (
-	"fmt"
-	"path/filepath"
-	"runtime"
 	"reflect"
 	"testing"
 )
 
 // assert fails the test if the condition is false.
 func assert(tb testing.TB, condition bool, msg string, v ...interface{}) {
+	tb.Helper()
 	if !condition {
-		_, file, line, _ := runtime.Caller(1)
-		fmt.Printf("\033[31m%s:%d: "+msg+"\033[39m\n\n", append([]interface{}{filepath.Base(file), line}, v...)...)
-		tb.FailNow()
+		tb.Fatalf(msg, v...)
 	}
 }
 
 // ok fails the test if an err is not nil.
 func ok(tb testing.TB, err error) {
+	tb.Helper()
 	if err != nil {
-		_, file, line, _ := runtime.Caller(1)
-		fmt.Printf("\033[31m%s:%d: unexpected error: %s\033[39m\n\n", filepath.Base(file), line, err.Error())
-		tb.FailNow()
+		tb.Fatalf("unexpected error: %s", err.Error())
 	}
 }
 
 // equals fails the test if exp is not equal to act.
 func equals(tb testing.TB, exp, act interface{}) {
+	tb.Helper()
 	if !reflect.DeepEqual(exp, act) {
-		_, file, line, _ := runtime.Caller(1)
-		fmt.Printf("\033[31m%s:%d:\n\n\texp: %#v\n\n\tgot: %#v\033[39m\n\n", filepath.Base(file), line, exp, act)
-		tb.FailNow()
+		tb.Fatalf("exp: %#v\n\n\tgot: %#v", exp, act)
 	}
 }
 ```
